@@ -1,0 +1,38 @@
+name: nuoyis's blog Pages build
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Use nodejs
+        uses: actions/setup-node@v7
+        with:
+          node-version: latest
+          package-manager-cache: false
+      - name: Install Hexo
+        run: |
+          rm -rf node_modules && npm install --force
+          npm install -g hexo-cli
+          # 这是随机壁纸设置，网上有说明
+          # cp random_img.js node_modules/hexo-theme-butterfly/scripts
+      - name: Hexo generate
+        run: |
+          hexo clean
+          hexo generate
+      - name: Hexo deploy
+        run: |
+          git config --global user.name "nuoyis-study"
+          git config --global user.email "wkkjonlykang@vip.qq.com"
+          hexo deploy
+        env:
+          token: ${{ secrets.token }}
