@@ -104,6 +104,6 @@ deploy:
   type: git
   repo:
     github:
-      url: https://github.com/nuoyis/nuoyis.github.io.git
+      url: https://github.com/nuoyis/nuoyis-study.github.io.git
       branch: master
       token: $token
